@@ -10,7 +10,7 @@ This is a set of guidelines for lovable projects that every project should follo
  - Dependencies should not have known vulnerabilities, this can be verified by running `npm audit`
  - Unused dependencies should be removed
  - All pages should be protected by security headers (CSP, Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy)
-   See: https://securityheaders.com/?q={{SITE_URL}}
+   See: https://securityheaders.com/?q={{SITE_URL}}, replace {{SITE_URL}} with the URL of the site to check
  - File `robots.txt` should be present and contain:
    `User-agent: *
 Disallow: /`
@@ -33,7 +33,7 @@ Disallow: /`
 
 Projects are deployed automatically to Clever Cloud. It needs to have a clear build and a start phase.
 
-Example:
+For Node projects, the following scripts should be added to the `package.json` file:
 
 ```json
 {
