@@ -1,37 +1,65 @@
-# Lovable Guidelines
+# Lovable – Guidelines
 
-This is a set of guidelines for lovable projects that every project should follow.
+## Rule Levels
+
+These levels define the normative strength of rules and their execution priority.
+
+- **MUST**: mandatory, cannot be violated
+- **SHOULD**: strongly recommended, allowed only with strong justification
+- **MAY**: optional
+
+---
 
 ## Constraints
 
 ### Security
 
- - Dependencies should be up to date, this can be verified by running `npm outdated`
- - Dependencies should not have known vulnerabilities, this can be verified by running `npm audit`
- - Unused dependencies should be removed
- - All pages should be protected by security headers (CSP, Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy)
-   See: https://securityheaders.com/?q={{SITE_URL}}, replace {{SITE_URL}} with the URL of the site to check
- - File `robots.txt` should be present and contain:
-   `User-agent: *
-Disallow: /`
+*Purpose: minimize attack surface and prevent misconfigurations.*
 
-### Performance
-
- - All API requests should be paginated and load only one page at a time
-   - If you need to count the total number of items, use the `itemsPerPage` query parameter with a value of `0`
-   - Skeletons should be used to display the loading state
-
-## Best practices
+ - Dependencies **MUST** be up to date, check with `npm outdated`.
+ - Projects with known vulnerable dependencies **MUST** be rejected, check with `npm audit`.
+ - Secrets **MUST NOT** be hardcoded.
+ - Credentials **MUST** use environment variables.
+ - User input **MUST** be validated and sanitized.
+ - Security headers **MUST** be enabled, check with https://securityheaders.com/?q={{SITE_URL}} where {{SITE_URL}} is the URL of the deployed site.
+ - `robots.txt` **MUST** be restrictive.
 
 ### Code
 
- - Eslint should be used to enforce code style, this can be verified by running `npm run lint`
-   - Basics recommended rules should be used according to the project language
- - Unused files should be removed
+*Purpose: maintain a stable, readable, and controllable codebase.*
+
+ - ESLint **MUST** be configured.
+ - The build **SHOULD** fail if linting fails.
+ - Code **SHOULD** be modular and readable.
+ - Dead code **MUST NOT** be committed.
+
+---
+
+## Best Practices
+
+### Performance
+
+*Purpose: ensure smooth and scalable user experience.*
+
+ - Pagination **MUST** be implemented for large datasets.
+ - Loading skeletons **SHOULD** be used.
+ - Heavy components **SHOULD** be lazy-loaded.
+ - Server-side rendering **SHOULD** be used.
+ - You **SHOULD** reduce the number of dependencies.
+
+### Quality
+
+*Purpose: reduce the risk of defects in production.*
+
+ - Errors **MUST** be handled gracefully.
+ - Logs **SHOULD** be structured and meaningful.
+ - Tests **SHOULD** cover critical paths.
+
+---
 
 ## Deployment
 
-Projects are deployed automatically to Clever Cloud. It needs to have a clear build and a start phase.
+*Purpose: guarantee reliable deployments.*
 
 For Node projects, the following scripts should be added to the `package.json` file:
 
@@ -42,8 +70,8 @@ For Node projects, the following scripts should be added to the `package.json` f
       "start": "serve -s dist"
   },
   "devDependencies": {
-      "vite": "^2.6.14",
-      "serve": "^13.0.2"
+      "vite": "^7.2.7",
+      "serve": "^14.2.5"
   }
 }
 ```
